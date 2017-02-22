@@ -43,6 +43,40 @@ describe('Live Order Board', () => {
             Chai.assert.equal(board.orders.length, 1);
             Chai.assert.equal(board.orders[0].quantity, 15);
         });
+
+        it('And all SELL orders should be ordered lowest price first', () => {
+            const firstOrder: IOrder = {
+                userId: 'testTrader3',
+                type: 'BUY',
+                quantity: 5,
+                price: 200
+            };
+
+            const secondOrder: IOrder = {
+                userId: 'testTrader4',
+                type: 'SELL',
+                quantity: 10,
+                price: 200
+            };
+
+            const thirdOrder: IOrder = {
+                userId: 'testTrader4',
+                type: 'SELL',
+                quantity: 10,
+                price: 201
+            };
+
+            marketplace.registerOrder(firstOrder);
+            marketplace.registerOrder(secondOrder);
+            marketplace.registerOrder(thirdOrder);
+
+            const board = marketplace.getBoard();
+
+            Chai.should().exist(board);
+            Chai.assert.equal(board.orders.length, 3);
+            Chai.assert.equal(board.orders[1].price, 200);
+            Chai.assert.equal(board.orders[2].price, 201);
+        });
     });
 
     describe('Given I am a trader', () => {

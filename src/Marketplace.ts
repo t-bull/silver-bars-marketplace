@@ -2,7 +2,13 @@
 
 import {IOrderBoard, IOrder} from './OrderBoard';
 
-export class Marketplace {
+export interface IMarketplace {
+    getBoard: Function,
+    registerOrder: Function,
+    removeOrder: Function
+}
+
+export class Marketplace implements IMarketplace {
     private board: IOrderBoard;
 
     constructor() {

@@ -1,12 +1,12 @@
 'use strict';
 
-import {Marketplace} from '../../src/Marketplace';
+import {Marketplace, IMarketplace} from '../../src/Marketplace';
 import {IOrder, IOrderBoard} from '../../src/OrderBoard';
 
 import * as Chai from 'chai';
 
 describe('Live Order Board', () => {
-    let marketplace;
+    let marketplace: IMarketplace;
 
     beforeEach(function () {
         marketplace = new Marketplace();
@@ -17,6 +17,29 @@ describe('Live Order Board', () => {
             const orderBoard: IOrderBoard = marketplace.getBoard();
             Chai.should().exist(orderBoard);
             Chai.assert.equal(orderBoard.orders.length, 0);
+        });
+
+        it('And orders with the same price should be combined into the same order', () => {
+            const firstOrder: IOrder = {
+                userId: 'testTrader3',
+                type: 'BUY',
+                quantity: 5,
+                price: 200
+            };
+
+            const secondOrder: IOrder = {
+                userId: 'testTrader4',
+                type: 'BUY',
+                quantity: 10,
+                price: 200
+            };
+
+            marketplace.registerOrder(firstOrder);
+            let board = marketplace.registerOrder(secondOrder);
+
+            Chai.should().exist(board);
+            Chai.assert.equal(board.orders.length, 1);
+            Chai.assert.equal(board.orders[0].quantity, 15);
         });
     });
 

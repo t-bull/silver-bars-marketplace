@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "watch": false
+  },
+  "exclude": [
+    "node_modules",
+    "build/node_modules",
+    "test/node_modules",
+    "typings/browser",
+    "typings/browser.d.ts",
+    "tests/fixtures",
+    "tmp",
+    ".vscode"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  }
+}

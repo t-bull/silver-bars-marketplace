@@ -1,0 +1,27 @@
+{
+  "name": "silver-bars",
+  "version": "1.0.0",
+  "description": "Simple marketplace app",
+  "main": "index.js",
+  "scripts": {
+    "transpile": "./node_modules/.bin/tsc -p .",
+    "test": "npm run transpile && NODE_ENV=test ./node_modules/.bin/mocha -R spec ./test/unit/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/t-bull/silver-bars-marketplace.git"
+  },
+  "author": "David Turnbull",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/t-bull/silver-bars-marketplace/issues"
+  },
+  "homepage": "https://github.com/t-bull/silver-bars-marketplace#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "typescript": "^2.2.1"
+  }
+}

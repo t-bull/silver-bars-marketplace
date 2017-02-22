@@ -3,6 +3,7 @@ export interface IOrderBoard {
 }
 
 export interface IOrder {
+    userId: string;
     type: string;
     quantity: number;
     price: number;

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["node", "mocha", "chai"],
     "target": "es6",
     "module": "commonjs",
     "noImplicitAny": false,

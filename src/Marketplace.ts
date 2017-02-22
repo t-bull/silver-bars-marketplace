@@ -14,4 +14,10 @@ export class Marketplace {
     public getBoard() {
         return this.board;
     }
+
+    public registerOrder(order: IOrder) {
+        this.board.orders.push(order);
+
+        return this.board;
+    }
 }

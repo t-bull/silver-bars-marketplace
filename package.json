@@ -20,9 +20,10 @@
   "homepage": "https://github.com/t-bull/silver-bars-marketplace#readme",
   "devDependencies": {
     "@types/chai": "^3.4.35",
+    "@types/lodash": "4.14.42",
     "@types/mocha": "^2.2.39",
     "chai": "^3.5.0",
-    "lodash": "^4.17.4",
+    "lodash": "^3.10.1",
     "mocha": "^3.2.0",
     "tslint": "^4.4.2"
   },

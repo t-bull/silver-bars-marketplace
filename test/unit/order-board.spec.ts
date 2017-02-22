@@ -12,7 +12,7 @@ describe('Live Order Board', () => {
         marketplace = new Marketplace();
     });
 
-    describe('Given I have an order board', () => {
+     describe('Given I have an order board', () => {
         it('Then I can view the live state of the order board', () => {
             const orderBoard: IOrderBoard = marketplace.getBoard();
             Chai.should().exist(orderBoard);
@@ -35,7 +35,9 @@ describe('Live Order Board', () => {
             };
 
             marketplace.registerOrder(firstOrder);
-            let board = marketplace.registerOrder(secondOrder);
+            marketplace.registerOrder(secondOrder);
+
+            const board = marketplace.getBoard();
 
             Chai.should().exist(board);
             Chai.assert.equal(board.orders.length, 1);

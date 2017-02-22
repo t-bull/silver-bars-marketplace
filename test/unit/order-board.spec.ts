@@ -23,7 +23,7 @@ describe('Live Order Board', () => {
     describe('Given I am a trader', () => {
         it('Then I should be able to register an order', () => {
             const order: IOrder = {
-                userId: 'testId',
+                userId: 'testTrader1',
                 type: 'BUY',
                 quantity: 3.5,
                 price: 303
@@ -37,6 +37,23 @@ describe('Live Order Board', () => {
             Chai.assert.equal(orderBoard.orders[0].type, order.type);
             Chai.assert.equal(orderBoard.orders[0].quantity, order.quantity);
             Chai.assert.equal(orderBoard.orders[0].price, order.price);
+        });
+
+        it('And I should be able to remove my order from the board', () => {
+            const order: IOrder = {
+                userId: 'testTrader2',
+                type: 'BUY',
+                quantity: 4,
+                price: 300
+            };
+
+            let orderBoard = marketplace.registerOrder(order);
+            
+            Chai.assert.equal(orderBoard.orders.length, 1);
+
+            orderBoard = marketplace.removeOrder(order);
+
+            Chai.assert.equal(orderBoard.orders.length, 0);
         });
     });
 });

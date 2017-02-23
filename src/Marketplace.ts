@@ -15,41 +15,49 @@ export class Marketplace implements IMarketplace {
         this.board = { orders: [] };
     }
 
+    private orderSellByPrice(orders: IOrder[]): IOrder[] {
+        const sellOrders = orders.filter(order => order.type === 'SELL');
+        const buyOrders = orders.filter(order => order.type !== 'SELL');
+     
+        let sortedOrders = sellOrders.sort((a, b) => a.price - b.price);
+
+        return buyOrders.concat(sortedOrders);
+    }
+
     private combineCommonOrders(): IOrderBoard {
-        // clone the array. Array.prototype.slice wont work because the references to the objects will remain.
-        const ordersCopy = JSON.parse(JSON.stringify(this.board.orders));
-        const summaryOrders: IOrder[] = [];
-       
-        if (ordersCopy.length <= 1) {
+        if (this.board.orders.length <= 1) {
             return this.board;
         }
 
-        for (let i = 0; i < ordersCopy.length; i++) {
-            let currentOrder: IOrder = ordersCopy.shift();
+        const combinedOrders: IOrder[] = [];
+        const priceMap: Map<string, IOrder> = new Map();
 
-            for (let j = 0; j < ordersCopy.length; j++) {
-                let comparableOrder: IOrder = ordersCopy[j];
+        this.board.orders.forEach(order => {
 
-                if (comparableOrder.price === currentOrder.price &&
-                    comparableOrder.type === currentOrder.type) {
-
-                    currentOrder.quantity += comparableOrder.quantity;
-                    ordersCopy.splice(ordersCopy.indexOf(comparableOrder), 1);
-                }
+            let mapping = priceMap.get(order.price + order.type);
+            
+            if (mapping) {
+                mapping.quantity += order.quantity;
+                priceMap.set(mapping.price + mapping.type, mapping);
+            } else {
+                let clone = Object.assign({}, order);
+                priceMap.set(clone.price + clone.type, clone);
             }
-            summaryOrders.push(currentOrder);
-        }
+        });
 
-        return { orders: summaryOrders };
+        priceMap.forEach((value, key, map) => combinedOrders.push(value));
+
+        return { orders: combinedOrders };
     }
-
+    
     public getBoard(): IOrderBoard {
-        return this.combineCommonOrders();
+        let board = this.combineCommonOrders();
+        board.orders = this.orderSellByPrice(board.orders);
+        return board;
     }
 
     public registerOrder(order: IOrder): IOrderBoard {
         this.board.orders.push(order);
-
         return this.getBoard();
     }
 

@@ -3,9 +3,9 @@
 import {IOrderBoard, IOrder} from './OrderBoard';
 
 export interface IMarketplace {
-    getBoard: Function;
-    registerOrder: Function;
-    removeOrder: Function;
+    getBoard(): IOrderBoard;
+    registerOrder(order: IOrder): IOrderBoard;
+    removeOrder(order: IOrder): IOrderBoard;
 }
 
 export class Marketplace implements IMarketplace {
